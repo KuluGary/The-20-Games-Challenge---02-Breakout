@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqrabp8d5f5d5"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_ecdrf"]
+[ext_resource type="Texture2D" uid="uid://c4w8pygs3eyrw" path="res://sprites/ball.png" id="1_i4lc6"]
+[ext_resource type="AudioStream" uid="uid://dqc60laorkpog" path="res://sfx/Bump.wav" id="2_p1dgt"]
+[ext_resource type="AudioStream" uid="uid://c86u2ix54s7y8" path="res://sfx/Cancel.wav" id="3_ss27u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pyhjj"]
+radius = 3.16228
+
+[node name="Ball" type="CharacterBody2D"]
+position = Vector2(80, 96)
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_ecdrf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i4lc6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.526711, 0.45937)
+shape = SubResource("CircleShape2D_pyhjj")
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="BumpSound" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("2_p1dgt")
+
+[node name="DefeatSound" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("3_ss27u")

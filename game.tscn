@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=3 uid="uid://c434cy2gurqfj"]
+
+[ext_resource type="PackedScene" uid="uid://cq4c5sqjnb5mf" path="res://wall.tscn" id="1_ijcas"]
+[ext_resource type="Script" path="res://game.gd" id="1_jwrjr"]
+[ext_resource type="PackedScene" uid="uid://dv4c6evsqpeu1" path="res://paddle.tscn" id="2_3kc0g"]
+[ext_resource type="PackedScene" uid="uid://cqrabp8d5f5d5" path="res://ball.tscn" id="3_55wfq"]
+[ext_resource type="Script" path="res://scripts/paddle.gd" id="3_s02tv"]
+[ext_resource type="FontFile" uid="uid://dux7srlm20x2c" path="res://fonts/ThaleahFat.ttf" id="6_cdij8"]
+[ext_resource type="Script" path="res://scripts/defeat_menu.gd" id="7_jeas5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4kfw"]
+size = Vector2(160, 18)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_jwrjr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(80, 60)
+
+[node name="Score" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("6_cdij8")
+text = "000"
+horizontal_alignment = 1
+
+[node name="DefeatZone" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DefeatZone"]
+position = Vector2(80, 129)
+shape = SubResource("RectangleShape2D_t4kfw")
+
+[node name="Ball" parent="." instance=ExtResource("3_55wfq")]
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall2" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(160, 20)
+scale = Vector2(1, 1.24)
+
+[node name="Wall1" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(8, 20)
+scale = Vector2(1, 1.24)
+
+[node name="Wall3" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(128, 8)
+rotation = 1.5708
+scale = Vector2(1, 1.52)
+
+[node name="Paddle" parent="." instance=ExtResource("2_3kc0g")]
+collision_mask = 5
+script = ExtResource("3_s02tv")
+
+[node name="Blocks" type="Node2D" parent="."]
+
+[node name="DefeatMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("7_jeas5")
+
+[node name="Label" type="Label" parent="DefeatMenu"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 40.0
+offset_right = 103.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("6_cdij8")
+text = "DEFEAT"
+
+[node name="Button" type="Button" parent="DefeatMenu"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 60.0
+offset_right = 107.0
+offset_bottom = 79.0
+theme_override_fonts/font = ExtResource("6_cdij8")
+theme_override_font_sizes/font_size = 12
+text = "TRY AGAIN"
+flat = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 48.0
+offset_top = 12.0
+offset_right = 48.0
+offset_bottom = 20.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 8.0
+size_flags_vertical = 0
+
+[connection signal="body_entered" from="DefeatZone" to="." method="_on_defeat_zone_body_entered"]
+[connection signal="pressed" from="DefeatMenu/Button" to="DefeatMenu" method="_on_button_pressed"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://0t1jat5bj76"]
+
+[ext_resource type="Texture2D" uid="uid://c4w8pygs3eyrw" path="res://sprites/ball.png" id="1_fe8g0"]
+
+[node name="Panel" type="Panel"]
+custom_minimum_size = Vector2(8, 8)
+size_flags_vertical = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3, 4)
+texture = ExtResource("1_fe8g0")

@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://c434cy2gurqfj"]
+
+[ext_resource type="PackedScene" uid="uid://cq4c5sqjnb5mf" path="res://wall.tscn" id="1_ijcas"]
+[ext_resource type="PackedScene" uid="uid://dv4c6evsqpeu1" path="res://paddle.tscn" id="2_3kc0g"]
+[ext_resource type="PackedScene" uid="uid://cqrabp8d5f5d5" path="res://ball.tscn" id="3_55wfq"]
+[ext_resource type="Script" path="res://scripts/paddle.gd" id="3_s02tv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t4kfw"]
+size = Vector2(160, 18)
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(80, 60)
+
+[node name="DefeatZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DefeatZone"]
+position = Vector2(80, 129)
+shape = SubResource("RectangleShape2D_t4kfw")
+
+[node name="Ball" parent="." instance=ExtResource("3_55wfq")]
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall2" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(160, 20)
+scale = Vector2(1, 1.24)
+
+[node name="Wall1" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(8, 20)
+scale = Vector2(1, 1.24)
+
+[node name="Wall3" parent="Walls" instance=ExtResource("1_ijcas")]
+position = Vector2(128, 8)
+rotation = 1.5708
+scale = Vector2(1, 1.52)
+
+[node name="Paddle" parent="." instance=ExtResource("2_3kc0g")]
+collision_mask = 5
+script = ExtResource("3_s02tv")
